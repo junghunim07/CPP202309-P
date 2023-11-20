@@ -5,12 +5,12 @@
 using namespace std;
 
 class Student {
-private :
+private:
 	string name;
 	int studentID;
 	string phoneNumber;
 
-public :
+public:
 	Student(string name, int studentID, string phoneNumber);
 	string getName();
 	string getPhoneNumber();

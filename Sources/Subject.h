@@ -1,18 +1,18 @@
 #pragma once
+#include "Grade.h"
 #include <iostream>
+#include <unordered_map>
 
 using namespace std;
 
 class Subject {
-private :
+private:
 	string subjectName;
-	int studentID;
-	float mark;
-	string grade;
+	unordered_map<int, Grade> studentGrade;
 
-public :
+public:
+	Subject(string subjectName, vector<int> studentID);
 	string getSubjectName();
-	int getStudentID();
-	float getMark();
-	string getGrade();
+	unordered_map<int, Grade> getStudentGrade();
+	//int calculateGrade();
 };
