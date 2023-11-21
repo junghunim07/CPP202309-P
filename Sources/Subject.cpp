@@ -1,17 +1,36 @@
 #include "Subject.h"
 
-string Subject::getSubjectName() {
+Subject::Subject(std::string subjectName, std::vector<int> studentsID) {
+	this->subjectName = subjectName;
+	for (int i = 0; i < studentsID.size(); i++) {
+		Grade grade;
+		studentGrade.insert(std::pair<int, Grade>(studentsID[i], grade));
+	}
+}
+
+std::string Subject::getSubjectName() {
 	return subjectName;
 }
 
-int Subject::getStudentID() {
-	return studentID;
+std::unordered_map<int, Grade> Subject::getStudentGrade() {
+	return studentGrade;
 }
 
-float Subject::getMark() {
-	return mark;
+bool Subject::searchSubject(Subject subject, std::string subjectName) {
+	if (subject.getSubjectName() == subjectName) {
+		return true;
+	}
+	return false;
 }
 
-string Subject::getGrade() {
-	return grade;
+void Subject::enterGrade(Subject subject, int studentID, std::string exam, float score) {
+	for (auto it = studentGrade.begin(); it != studentGrade.end(); it++) {
+		Grade grade = studentGrade[studentID];
+		if (exam == "Áß°£") {
+			grade.setMidtermScore(score);
+		}
+		else {
+			grade.setLastScore(score);
+		}
+	}
 }

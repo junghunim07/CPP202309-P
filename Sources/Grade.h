@@ -3,14 +3,16 @@
 #include <vector>
 
 class Grade {
-private :
+private:
 	float midterm_Score;
 	float last_Score;
 	std::string grade;
 
-public :
+public:
 	Grade();
 	void setMidtermScore(float score);
 	void setLastScore(float score);
 	std::string getGrade();
+	float getMidtermScore();
+	float getLastScore();
 };

@@ -1,16 +1,16 @@
 #include "Student.h"
 
-Student::Student(string name, int studentID, string phoneNumber) {
+Student::Student(std::string name, int studentID, std::string phoneNumber) {
 	this->name = name;
 	this->studentID = studentID;
 	this->phoneNumber = phoneNumber;
 }
 
-string Student::getName() {
+std::string Student::getName() {
 	return name;
 }
 
-string Student::getPhoneNumber() {
+std::string Student::getPhoneNumber() {
 	return phoneNumber;
 }
 
@@ -19,9 +19,9 @@ int Student::getStudentID() {
 }
 
 void Student::studentValidation(Student student) {
-	string strID = to_string(studentID);
+	std::string strID = std::to_string(studentID);
 
 	if (strID.length() < 6) {
-		cout << "학번을 다시 입력해주세요."<< endl;
+		std::cout << "학번을 다시 입력해주세요." << std::endl;
 	}
 }

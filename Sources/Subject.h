@@ -3,16 +3,15 @@
 #include <iostream>
 #include <unordered_map>
 
-using namespace std;
-
 class Subject {
 private:
-	string subjectName;
-	unordered_map<int, Grade> studentGrade;
+	std::string subjectName;
+	std::unordered_map<int, Grade> studentGrade;
 
 public:
-	Subject(string subjectName, vector<int> studentID);
-	string getSubjectName();
-	unordered_map<int, Grade> getStudentGrade();
-	//int calculateGrade();
+	Subject(std::string subjectName, std::vector<int> studentID);
+	std::string getSubjectName();
+	std::unordered_map<int, Grade> getStudentGrade();
+	void enterGrade(Subject subject, int studentID, std::string exam, float mark);
+	bool searchSubject(Subject subject, std::string subjectName);
 };

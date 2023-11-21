@@ -14,6 +14,14 @@ void Grade::setLastScore(float score) {
 	last_Score = score;
 }
 
+float Grade::getMidtermScore() {
+	return midterm_Score;
+}
+
+float Grade::getLastScore() {
+	return last_Score;
+}
+
 std::string Grade::getGrade() {
 	return grade;
 }
