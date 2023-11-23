@@ -1,44 +1,66 @@
 #include "Grade.h"
 
-Grade::Grade() {
-	midterm_Score = 0.0;
-	last_Score = 0.0;
-	average = 0.0;
-	grade = "";
+void Grade::setStudenID(int studentID) {
+	this->studentID = studentID;
 }
 
 void Grade::setMidtermScore(float score) {
-	midterm_Score = score;
-	calculateAverage();
+	midtermScore = score;
 }
 
-void Grade::setLastScore(float score) {
-	last_Score = score;
-	calculateAverage();
+void Grade::setLasttermScore(float score) {
+	lasttermScore = score;
+}
+
+void Grade::calculateExamAverage(Grade* grade) {
+	grade->average = (grade->midtermScore + grade->lasttermScore) / 2;
+}
+
+
+
+Grade::Grade(int studentID) {
+	setStudenID(studentID);
+	midtermScore = 0;
+	lasttermScore = 0;
+	average = 0;
+	grade = "";
+}
+
+void Grade::inputStudentScore(Grade* grade,float score, std::string examName) {
+	if (examName == "중간") {
+		grade->setMidtermScore(score);
+	}
+	if (examName == "기말") {
+		grade->setLasttermScore(score);
+	}
+}
+
+void Grade::getGradeCard(Grade* grade, std::string examName) {
+	if (grade->midtermScore != 0 && grade->lasttermScore != 0) {
+		grade->calculateExamAverage(grade);
+	}
+	else if (grade->lasttermScore == 0) {
+		grade->average = grade->midtermScore;
+	}
+	else if (grade->midtermScore == 0) {
+		grade->average = grade->lasttermScore;
+	}
+}
+
+int Grade::getStudentID() {
+	return studentID;
 }
 
 float Grade::getMidtermScore() {
-	return midterm_Score;
+	return midtermScore;
 }
 
-float Grade::getLastScore() {
-	return last_Score;
+float Grade::getLasttermScore() {
+	return lasttermScore;
 }
 
 float Grade::getAverage() {
 	return average;
-}
-
-void Grade::calculateAverage() {
-	if (last_Score == 0) {
-		average = midterm_Score;
-	}
-	else if (midterm_Score == 0) {
-		average = last_Score;
-	}
-	else {
-		average = (midterm_Score + last_Score) / 2;
-	}
 }
 
 std::string Grade::getGrade() {

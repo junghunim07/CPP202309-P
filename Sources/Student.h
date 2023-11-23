@@ -2,18 +2,19 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 class Student {
-private:
-	string name;
+private :
+	std::string studentName;
+	std::string phoneNumber;
 	int studentID;
-	string phoneNumber;
+	bool checkStudentInformationValidation(int studentID, std::string phoneNumber);
+	bool checkStudentID(int studentID);
+	bool checkStudentPhoneNumber(std::string phoneNumber);
 
-public:
-	Student(string name, int studentID, string phoneNumber);
-	string getName();
-	string getPhoneNumber();
+public :
+	Student();
+	Student(std::string studentName, int studentID, std::string phoneNumber);
+	std::string getStudentName();
+	std::string getPhoneNumber();
 	int getStudentID();
-	void studentValidation(Student student);
 };

@@ -1,21 +1,25 @@
 #pragma once
 #include <iostream>
-#include <vector>
 
 class Grade {
 private:
-	float midterm_Score;
-	float last_Score;
+	int studentID;
+	float midtermScore;
+	float lasttermScore;
 	float average;
 	std::string grade;
-
-public:
-	Grade();
+	void setStudenID(int studentID);
 	void setMidtermScore(float score);
-	void setLastScore(float score);
-	std::string getGrade();
+	void setLasttermScore(float score);
+	void calculateExamAverage(Grade* grade);
+
+public :
+	Grade(int studentID);
+	void inputStudentScore(Grade* grade, float score, std::string examName);
+	void getGradeCard(Grade* grade, std::string examName);
+	int getStudentID();
 	float getMidtermScore();
-	float getLastScore();
-	void calculateAverage();
+	float getLasttermScore();
 	float getAverage();
+	std::string getGrade();
 };
