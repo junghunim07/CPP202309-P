@@ -7,13 +7,12 @@ private:
 	float midtermScore;
 	float lasttermScore;
 	float average;
-	std::string grade;
 	void setStudenID(int studentID);
 	void setMidtermScore(float score);
 	void setLasttermScore(float score);
 	void calculateExamAverage(Grade* grade);
 
-public :
+public:
 	Grade(int studentID);
 	void inputStudentScore(Grade* grade, float score, std::string examName);
 	void getGradeCard(Grade* grade, std::string examName);
@@ -21,5 +20,4 @@ public :
 	float getMidtermScore();
 	float getLasttermScore();
 	float getAverage();
-	std::string getGrade();
 };
