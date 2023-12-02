@@ -12,7 +12,7 @@ private:
 	void setLasttermScore(float score);
 	void calculateExamAverage(Grade* grade);
 
-public:
+public :
 	Grade(int studentID);
 	void inputStudentScore(Grade* grade, float score, std::string examName);
 	void getGradeCard(Grade* grade, std::string examName);

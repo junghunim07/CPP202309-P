@@ -52,7 +52,7 @@ Student::Student() {
 }
 
 // 입력한 값을 각 학생 객체 인스턴스 변수에 저장
-Student::Student(std::string studentName, int studentID, std::string phoneNumber) {
+Student::Student(std::string studentName, int studentID, std:: string phoneNumber) {
 	if (checkStudentInformationValidation(studentID, phoneNumber)) {
 		this->studentName = studentName;
 		this->studentID = studentID;

@@ -3,7 +3,7 @@
 #include <vector>
 
 class GradeMachine {
-private:
+private :
 	int A;
 	float limitAScore;
 
@@ -11,8 +11,10 @@ private:
 	void setA(int count);
 	void setLimitAScore(Grade* grade);
 
-public:
+public :
+	GradeMachine();
 	GradeMachine(std::vector<Grade>& studentGradeCard, int count);
 	void searchLimitALineScore(GradeMachine& gradeMachine, std::vector<Grade>& studentGradeCard);
 	void searchStudentGrade(std::vector<Grade>& studentGradeCard, int studentID, std::string format);
+	void searchStudentGoalGrade(std::vector<Grade>& studentsGradeCard, int studentID, std::string goalGrade);
 };

@@ -6,61 +6,58 @@
 
 using namespace std;
 
-int result;									// 실행하고자 하는 메뉴를 저장할 변수
-int studentCount;							// 학생의 수를 저장할 변수
+int result;
+int studentCount;
 
-vector<Student> students;					// 학생의 정보를 저장할 vector
-vector<Grade> studentGrade;					// 각 학생의 성적을 저장할 vector
+GradeMachine gradeMachine;
 
-int printMenu();							// 메뉴를 출력할 함수
-void inputStudentCount();					// 학생 수를 입력 받기 위한 함수
-void inputStudentScore();					// 학생의 점수를 입력 받기 위한 함수
-void searchStudentGrade();					// 학생의 성적을 조회하기 위한 함수
-void searchStudentInformation();			// 학생의 정보를 조회하기 위한 함수
-Student inputStudentInformation();			// 학생의 정보를 입력하고 학생 객체를 생성하기 위한 함수
-Grade makeStudentGradeCard(int studentID);	// 학생 성적표를 만들기 위한 함수
+vector<Student> students;
+vector<Grade> studentGrade;
+
+int printMenu();
+void inputStudentCount();
+void inputStudentScore();
+void searchStudentGrade();
+void searchStudentInformation();
+void searchWantGoalScore();
+
+Student inputStudentInformation();
+Grade makeStudentGradeCard(int studentID);
 
 int main() {
 	cout << "CPP 성적 관리 시스템입니다." << endl;
-	// 학생의 수를 입력받는 함수
 	inputStudentCount();
 
-	// 학생의 수 만큼 학생 객체를 만들어 students라는 vector에 push하기 위한 for문
 	for (int i = 0; i < studentCount; i++) {
 		students.push_back(inputStudentInformation());
 	}
-	
-	// 학생들의 정보를 바탕으로 각 학생의 성적표를 Grade 객체로 생성해서 studentGrade vector에 push하기 위한 for문
+
 	for (int i = 0; i < studentCount; i++) {
 		studentGrade.push_back(makeStudentGradeCard(students[i].getStudentID()));
 	}
 
 	while (true) {
-		// 종료를 판단하기 위한 bool 변수
 		bool finish = false;
-		// 실행하고자하는 메뉴 번호를 저장
 		result = printMenu();
 
 		switch (result) {
-		// 학생 정보 조회
 		case 1:
 			searchStudentInformation();
 			break;
-		// 학생 성적 입력
 		case 2:
 			inputStudentScore();
 			break;
-		// 학생 성적 조회
 		case 3:
 			searchStudentGrade();
 			break;
-		// 종료
+		case 4:
+			searchWantGoalScore();
+			break;
 		case 0 :
 			finish = true;
 			break;
 		}
 
-		// 종료하길 원한다면 while문을 빠져나가기 위한 조건문
 		if (finish) {
 			break;
 		}
@@ -76,7 +73,8 @@ int printMenu() {
 	cout << "1. 학생 정보를 조회하고 싶다면 1번" << endl;
 	cout << "2. 학생 성적를 입력하고 싶다면 2번" << endl;
 	cout << "3. 성적 조회를 하고 싶다면 3번" << endl;
-	cout << "종료하고 싶다면 0번" << endl;
+	cout << "4. 원하는 성적을 받기 위해 필요한 점수를 알고 싶다면 4번" << endl;
+	cout << "0. 종료하고 싶다면 0번" << endl;
 	cout << "눌러주세요." << endl;
 	cin >> result;
 
@@ -97,14 +95,12 @@ Student inputStudentInformation() {
 	cout << "학생의 번호를 입력해주세요('-'로 구분해주세요) : ";
 	cin >> phoneNumber;
 
-	// 학생 객체를 생성
 	Student student(studentName, studentID, phoneNumber);
 
 	return student;
 }
 
 void searchStudentInformation() {
-	// 학생 정보 조회를 원했으면 학생들의 정보를 출력
 	for (int i = 0; i < studentCount; i++) {
 		cout << "학생의 이름 : " << students[i].getStudentName() << endl
 			<< "학생의 학번 : " << students[i].getStudentID() << endl
@@ -112,14 +108,13 @@ void searchStudentInformation() {
 	}
 }
 
-// 입력한 학생 정보를 바탕으로 각 학생 성적을 저장할 Grade객체 생성을 위한 함수
 Grade makeStudentGradeCard(int studentID) {
-	// 각 학생 별 Grade 객체 생성.
 	Grade grade(studentID);
 	return grade;
 }
 
 void inputStudentScore() {
+	int tmp = 0;
 	int studentID;
 	float score;
 	string examName;
@@ -133,20 +128,22 @@ void inputStudentScore() {
 	cout << "학생의 점수를 입력하세요 : ";
 	cin >> score;
 
-	for (auto it : studentGrade) {
+	for (auto& it : studentGrade) {
 		if (it.getStudentID() == studentID) {
 			it.inputStudentScore(&it, score, examName);
 			it.getGradeCard(&it, examName);
-		}
-		else {
-			cout << "학번이 존재하지 않습니다." << endl;
+			tmp++;
 		}
 	}
+
+	if (tmp == 0) {
+		cout << "해당 " << studentID << "학번은 존재하지 않습니다." << endl;
+	}
+	gradeMachine = GradeMachine(studentGrade, studentCount);
+	gradeMachine.searchLimitALineScore(gradeMachine, studentGrade);
 }
 
 void searchStudentGrade() {
-	GradeMachine gradeMachine(studentGrade, studentCount);
-	gradeMachine.searchLimitALineScore(gradeMachine, studentGrade);
 	int studentID;
 	string gradeFormat;
 
@@ -160,4 +157,17 @@ void searchStudentGrade() {
 	cin >> gradeFormat;
 
 	gradeMachine.searchStudentGrade(studentGrade, studentID, gradeFormat);
+}
+
+void searchWantGoalScore() {
+	int studentID;
+	string goalGrade;
+
+	cout << "학번을 입력하세요 : ";
+	cin >> studentID;
+
+	cout << "원하는 학점을 적으세요. (A or B) : ";
+	cin >> goalGrade;
+
+	gradeMachine.searchStudentGoalGrade(studentGrade, studentID, goalGrade);
 }

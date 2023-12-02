@@ -28,7 +28,7 @@ Grade::Grade(int studentID) {
 }
 
 // 기본적인 성적 입력의 호출에 따른 함수들을 호출할 함수
-void Grade::inputStudentScore(Grade* grade, float score, std::string examName) {
+void Grade::inputStudentScore(Grade* grade,float score, std::string examName) {
 	if (examName == "중간") {
 		grade->setMidtermScore(score);
 		std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->midtermScore << "' 입니다." << std::endl;
