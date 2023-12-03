@@ -53,7 +53,7 @@ int main() {
 		case 4:
 			searchWantGoalScore();
 			break;
-		case 0 :
+		case 0:
 			finish = true;
 			break;
 		}
@@ -114,33 +114,39 @@ Grade makeStudentGradeCard(int studentID) {
 }
 
 void inputStudentScore() {
-	int tmp = 0;
-	int studentID;
-	float score;
-	string examName;
+	int count;
+	cout << "성적 입력을 하고 싶은 학생의 수를 입력하세요 : " << endl;
+	cin >> count;
 
-	cout << "학생의 학번을 입력하세요 : ";
-	cin >> studentID;
+	for (int i = 0; i < count; i++) {
+		int tmp = 0;
+		int studentID;
+		float score;
+		string examName;
 
-	cout << "중간고사면 '중간' 기말고사면 '기말'을 입력해주세요 : ";
-	cin >> examName;
+		cout << "학생의 학번을 입력하세요 : ";
+		cin >> studentID;
 
-	cout << "학생의 점수를 입력하세요 : ";
-	cin >> score;
+		cout << "중간고사면 '중간' 기말고사면 '기말'을 입력해주세요 : ";
+		cin >> examName;
 
-	for (auto& it : studentGrade) {
-		if (it.getStudentID() == studentID) {
-			it.inputStudentScore(&it, score, examName);
-			it.getGradeCard(&it, examName);
-			tmp++;
+		cout << "학생의 점수를 입력하세요 : ";
+		cin >> score;
+
+		for (auto& it : studentGrade) {
+			if (it.getStudentID() == studentID) {
+				it.inputStudentScore(&it, score, examName);
+				it.getGradeCard(&it, examName);
+				tmp++;
+			}
+		}
+
+		if (tmp == 0) {
+			cout << "해당 " << studentID << "학번은 존재하지 않습니다." << endl;
 		}
 	}
 
-	if (tmp == 0) {
-		cout << "해당 " << studentID << "학번은 존재하지 않습니다." << endl;
-	}
 	gradeMachine = GradeMachine(studentGrade, studentCount);
-	gradeMachine.searchLimitALineScore(gradeMachine, studentGrade);
 }
 
 void searchStudentGrade() {
