@@ -48,7 +48,7 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 		for (auto it : studentGradeCard) {
 			if (it.getStudentID() == studentID) {
 				exist = true;
-				if (it.getAverage() > limitAScore) {
+				if (it.getAverage() >= limitAScore) {
 					std::cout << "A학점 입니다." << std::endl;
 				}
 				if (it.getAverage() < limitAScore) {
@@ -89,24 +89,49 @@ void GradeMachine::searchStudentGoalGrade(std::vector<Grade>& studentsGradeCard,
 	bool exist = false;
 	for (auto it : studentsGradeCard) {
 		index++;
-		if (it.getStudentID() == studentID) {
-			exist = true;
-			if (goalGrade._Equal("A")) {
-				if (index > A) {
-					std::cout << "현재 최하 A 학점의 점수는 = " << limitAScore << std::endl;
-					std::cout << "현재 " << studentID << "학생의 점수 = " << it.getAverage() << std::endl;
-					std::cout << "따라서 " << goalGrade << " 학점을 받고 싶다면 필요한 점수 = " << limitAScore - it.getAverage() << "점 입니다." << std::endl;
+		if (it.checkEveryExamScore()) {
+			if (it.getStudentID() == studentID) {
+				exist = true;
+				if (goalGrade._Equal("A")) {
+					if (index > A) {
+						std::cout << "현재 최하 A 학점의 점수는 = " << limitAScore << std::endl;
+						std::cout << "현재 " << studentID << "학생의 점수 = " << it.getAverage() << std::endl;
+						std::cout << "따라서 " << studentID << "학번은 B 학점 입니다." << std::endl;
+					}
+					else {
+						std::cout << "당신은 이미 A 학점 입니다." << std::endl;
+					}
 				}
 				else {
-					std::cout << "당신은 이미 A 학점 입니다." << std::endl;
+					if (index < A) {
+						std::cout << "당신의 현재 학점은 A 입니다." << std::endl;
+					}
+					else {
+						std::cout << "당신은 이미 목표 학점인 " << goalGrade << " 학점 입니다." << std::endl;
+					}
 				}
 			}
-			else {
-				if (index < A) {
-					std::cout << "당신의 현재 학점은 A 입니다." << std::endl;
+		}
+		else {
+			if (it.getStudentID() == studentID) {
+				exist = true;
+				if (goalGrade._Equal("A")) {
+					if (index > A) {
+						std::cout << "현재 최하 A 학점의 점수는 = " << limitAScore << std::endl;
+						std::cout << "현재 " << studentID << "학생의 중간 고사 점수 = " << it.getMidtermScore() << std::endl;
+						std::cout << "따라서 " << goalGrade << "학점은 받기 위해서 " << studentID << "학번은 " << it.getMidtermScore() - limitAScore << "만큼의 점수가 더 낮습니다." << std::endl;
+					}
+					else {
+						std::cout << "당신은 이미 A 학점 입니다." << std::endl;
+					}
 				}
 				else {
-					std::cout << "당신은 이미 목표 학점인 " << goalGrade << " 학점 입니다." << std::endl;
+					if (index < A) {
+						std::cout << "당신의 현재 학점은 A 입니다." << std::endl;
+					}
+					else {
+						std::cout << "당신은 이미 목표 학점인 " << goalGrade << " 학점 입니다." << std::endl;
+					}
 				}
 			}
 		}

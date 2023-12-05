@@ -147,6 +147,7 @@ void inputStudentScore() {
 	}
 
 	gradeMachine = GradeMachine(studentGrade, studentCount);
+	gradeMachine.searchLimitALineScore(gradeMachine, studentGrade);
 }
 
 void searchStudentGrade() {

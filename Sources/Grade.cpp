@@ -69,3 +69,11 @@ float Grade::getLasttermScore() {
 float Grade::getAverage() {
 	return average;
 }
+
+// 기말 성적까지 입력이 되어있는지 확인할 함수
+bool Grade::checkEveryExamScore() {
+	if (lasttermScore > 0) {
+		return true;
+	}
+	return false;
+}

@@ -20,4 +20,5 @@ public :
 	float getMidtermScore();
 	float getLasttermScore();
 	float getAverage();
+	bool checkEveryExamScore();
 };
