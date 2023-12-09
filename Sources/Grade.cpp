@@ -6,11 +6,37 @@ void Grade::setStudenID(int studentID) {
 }
 
 void Grade::setMidtermScore(float score) {
-	midtermScore = score;
+	// 점수가 '0'점일 시 점수 입력자에게 다시 한번 물어보는 조건문
+	if (score == 0) {
+		std::cout << score << "점수가 맞습니까?(y/n) : ";
+		std::string answer;
+		std::cin >> answer;
+		if (answer == "y") {
+			midtermScore = score;
+		}
+		else if (answer == "n") {
+			std::cout << "점수를 다시 입력해주세요 : ";
+			std::cin >> score;
+			midtermScore = score;
+		}
+	}
 }
 
 void Grade::setLasttermScore(float score) {
-	lasttermScore = score;
+	// 점수가 '0'점일 시 점수 입력자에게 다시 한번 물어보는 조건문
+	if (score == 0) {
+		std::cout << score << "점수가 맞습니까?(y/n) : ";
+		std::string answer;
+		std::cin >> answer;
+		if (answer == "y") {
+			lasttermScore = score;
+		}
+		else if (answer == "n") {
+			std::cout << "점수를 다시 입력해주세요 : ";
+			std::cin >> score;
+			lasttermScore = score;
+		}
+	}
 }
 
 // 성적의 평균을 낼 함수
@@ -28,7 +54,7 @@ Grade::Grade(int studentID) {
 }
 
 // 기본적인 성적 입력의 호출에 따른 함수들을 호출할 함수
-void Grade::inputStudentScore(Grade* grade,float score, std::string examName) {
+void Grade::inputStudentScore(Grade* grade, float score, std::string examName) {
 	if (examName == "중간") {
 		grade->setMidtermScore(score);
 		std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->midtermScore << "' 입니다." << std::endl;
@@ -36,7 +62,7 @@ void Grade::inputStudentScore(Grade* grade,float score, std::string examName) {
 	}
 	if (examName == "기말") {
 		grade->setLasttermScore(score);
-		std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->midtermScore << "' 입니다." << std::endl;
+		std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->lasttermScore << "' 입니다." << std::endl;
 		std::cout << "성적 입력이 완료됐습니다." << std::endl;
 	}
 }

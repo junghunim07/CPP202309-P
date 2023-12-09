@@ -115,7 +115,7 @@ Grade makeStudentGradeCard(int studentID) {
 
 void inputStudentScore() {
 	int count;
-	cout << "성적 입력을 하고 싶은 학생의 수를 입력하세요 : " << endl;
+	cout << "성적 입력을 하고 싶은 학생의 수를 입력하세요 : ";
 	cin >> count;
 
 	for (int i = 0; i < count; i++) {
