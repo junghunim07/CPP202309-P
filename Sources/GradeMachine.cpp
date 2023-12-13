@@ -22,7 +22,7 @@ void GradeMachine::setLimitAScore(Grade* sortGrade) {
 }
 
 GradeMachine::GradeMachine() {
-	
+
 }
 
 // GradeMachine의 기본 적인 설정을 하기 위한 생성자
@@ -40,7 +40,7 @@ void GradeMachine::searchLimitALineScore(GradeMachine& gradeMachine, std::vector
 }
 
 // 성적 조회를 위한 함수
-void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int studentID,std::string format) {
+void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int studentID, std::string format) {
 	// 해당 학생이 존재하는지 안하는지 확인할 bool 변수
 	bool exist = false;
 	// 원하는 성적 출력이 학점일 경우
@@ -48,10 +48,13 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 		for (auto it : studentGradeCard) {
 			if (it.getStudentID() == studentID) {
 				exist = true;
-				if (it.getAverage() >= limitAScore) {
+				if (it.getAverage() < 0) {
+					std::cout << studentID << "학생의 성적이 입력되어 있지 않습니다." << std::endl;
+				}
+				else if (it.getAverage() >= limitAScore) {
 					std::cout << "A학점 입니다." << std::endl;
 				}
-				if (it.getAverage() < limitAScore) {
+				else if (it.getAverage() < limitAScore) {
 					std::cout << "B학점 입니다." << std::endl;
 				}
 			}
@@ -62,7 +65,15 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 		for (auto it : studentGradeCard) {
 			if (it.getStudentID() == studentID) {
 				exist = true;
-				std::cout << studentID << "학생의 점수는 = " << it.getAverage() << "입니다." << std::endl;
+				if (it.getLasttermScore() >= 0 && it.getMidtermScore() >= 0) {
+					std::cout << studentID << "학생의 점수 평균은 = " << it.getAverage() << "입니다." << std::endl;
+				}
+				else if (it.getLasttermScore() < 0 && it.getMidtermScore() >= 0) {
+					std::cout << studentID << "학생의 중간고사 점수은 = " << it.getMidtermScore() << "입니다." << std::endl;
+				}
+				else {
+					std::cout << studentID << "학생의 성적은 아직 입력되어 있지 않습니다." << std::endl;
+				}
 			}
 		}
 	}
@@ -73,7 +84,12 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 			index++;
 			if (it.getStudentID() == studentID) {
 				exist = true;
-				std::cout << studentID << "학생의 등수는 = " << index << "입니다." << std::endl;
+				if (it.getAverage() < 0) {
+					std::cout << studentID << "학생의 성적이 입력되어 있지 않습니다." << std::endl;
+				}
+				else {
+					std::cout << studentID << "학생의 등수는 = " << index << "입니다." << std::endl;
+				}
 			}
 		}
 	}
@@ -84,6 +100,7 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 	}
 }
 
+// 학생의 목표 성적을 입력하여 정보를 얻기 위한 함수
 void GradeMachine::searchStudentGoalGrade(std::vector<Grade>& studentsGradeCard, int studentID, std::string goalGrade) {
 	int index = 0;
 	bool exist = false;

@@ -8,11 +8,12 @@ private:
 	float lasttermScore;
 	float average;
 	void setStudenID(int studentID);
-	void setMidtermScore(float score);
-	void setLasttermScore(float score);
+	bool setMidtermScore(float score);
+	bool setLasttermScore(float score);
 	void calculateExamAverage(Grade* grade);
+	bool checkScore(float score);
 
-public :
+public:
 	Grade(int studentID);
 	void inputStudentScore(Grade* grade, float score, std::string examName);
 	void getGradeCard(Grade* grade, std::string examName);
