@@ -46,14 +46,18 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 	// 원하는 성적 출력이 학점일 경우
 	if (format == "학점") {
 		for (auto it : studentGradeCard) {
+			// 학생이 존재한다면
 			if (it.getStudentID() == studentID) {
 				exist = true;
+				// 성적이 입력 안된 경우
 				if (it.getAverage() < 0) {
 					std::cout << studentID << "학생의 성적이 입력되어 있지 않습니다." << std::endl;
 				}
+				// A학점
 				else if (it.getAverage() >= limitAScore) {
 					std::cout << "A학점 입니다." << std::endl;
 				}
+				// B학점
 				else if (it.getAverage() < limitAScore) {
 					std::cout << "B학점 입니다." << std::endl;
 				}
@@ -106,9 +110,11 @@ void GradeMachine::searchStudentGoalGrade(std::vector<Grade>& studentsGradeCard,
 	bool exist = false;
 	for (auto it : studentsGradeCard) {
 		index++;
+		// 현재 성적이 다 입력되어 있을 경우
 		if (it.checkEveryExamScore()) {
 			if (it.getStudentID() == studentID) {
 				exist = true;
+				// 목표 학점이 'A'일 경우
 				if (goalGrade._Equal("A")) {
 					if (index > A) {
 						std::cout << "현재 최하 A 학점의 점수는 = " << limitAScore << std::endl;
@@ -119,6 +125,7 @@ void GradeMachine::searchStudentGoalGrade(std::vector<Grade>& studentsGradeCard,
 						std::cout << "당신은 이미 A 학점 입니다." << std::endl;
 					}
 				}
+				// 'B'일 경우
 				else {
 					if (index < A) {
 						std::cout << "당신의 현재 학점은 A 입니다." << std::endl;
@@ -129,19 +136,22 @@ void GradeMachine::searchStudentGoalGrade(std::vector<Grade>& studentsGradeCard,
 				}
 			}
 		}
+		// 성적 입력이 다 안되어 있을 경우
 		else {
 			if (it.getStudentID() == studentID) {
 				exist = true;
+				// 목표 점수가 'A'일 경우
 				if (goalGrade._Equal("A")) {
 					if (index > A) {
 						std::cout << "현재 최하 A 학점의 점수는 = " << limitAScore << std::endl;
 						std::cout << "현재 " << studentID << "학생의 중간 고사 점수 = " << it.getMidtermScore() << std::endl;
-						std::cout << "따라서 " << goalGrade << "학점은 받기 위해서 " << studentID << "학번은 " << it.getMidtermScore() - limitAScore << "만큼의 점수가 더 낮습니다." << std::endl;
+						std::cout << "따라서 " << goalGrade << "학점은 받기 위해서 " << studentID << "학번은 " << limitAScore - it.getMidtermScore() << "만큼의 점수가 더 낮습니다." << std::endl;
 					}
 					else {
 						std::cout << "당신은 이미 A 학점 입니다." << std::endl;
 					}
 				}
+				// 'B'일 경우
 				else {
 					if (index < A) {
 						std::cout << "당신의 현재 학점은 A 입니다." << std::endl;

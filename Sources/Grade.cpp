@@ -44,7 +44,7 @@ bool Grade::setMidtermScore(float score) {
 bool Grade::setLasttermScore(float score) {
 	try {
 		if (checkScore(score)) {
-			midtermScore = score;
+			lasttermScore = score;
 		}
 		else {
 			std::cout << "점수를 다시 입력해주세요 : ";
@@ -63,8 +63,6 @@ bool Grade::setLasttermScore(float score) {
 void Grade::calculateExamAverage(Grade* grade) {
 	grade->average = (grade->midtermScore + grade->lasttermScore) / 2;
 }
-
-
 
 Grade::Grade(int studentID) {
 	setStudenID(studentID);
@@ -97,13 +95,16 @@ void Grade::inputStudentScore(Grade* grade, float score, std::string examName) {
 
 // 성적 산출하는 함수
 void Grade::getGradeCard(Grade* grade, std::string examName) {
-	if (grade->midtermScore != 0 && grade->lasttermScore != 0) {
+	// 성적이 모두 입력했다면 평균 구하는 함수 호출
+	if (grade->midtermScore >= 0 && grade->lasttermScore >= 0) {
 		grade->calculateExamAverage(grade);
 	}
-	else if (grade->lasttermScore == 0) {
+	// 중간 성적만 입력 -> 평균 점수는 중간
+	else if (grade->midtermScore >= 0 && grade->lasttermScore < 0) {
 		grade->average = grade->midtermScore;
 	}
-	else if (grade->midtermScore == 0) {
+	// 기말 성적만 입력 -> 평균 점수는 기말
+	else if (grade->midtermScore < 0 && grade->lasttermScore >= 0) {
 		grade->average = grade->lasttermScore;
 	}
 }
