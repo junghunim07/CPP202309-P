@@ -12,10 +12,12 @@ private:
 	bool setLasttermScore(float score);
 	void calculateExamAverage(Grade* grade);
 	bool checkScore(float score);
+	float isUsedOtherText(std::string score);
+	bool isValidFloat(const::std::string& s);
 
 public:
 	Grade(int studentID);
-	void inputStudentScore(Grade* grade, float score, std::string examName);
+	void inputStudentScore(Grade* grade, std::string scores, std::string examName);
 	void getGradeCard(Grade* grade, std::string examName);
 	int getStudentID();
 	float getMidtermScore();

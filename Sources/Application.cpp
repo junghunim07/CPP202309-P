@@ -115,22 +115,23 @@ Grade makeStudentGradeCard(int studentID) {
 
 void inputStudentScore() {
 	int count;
+	string examName;
+
 	cout << "성적 입력을 하고 싶은 학생의 수를 입력하세요 : ";
 	cin >> count;
+
+	cout << "중간고사면 '중간' 기말고사면 '기말'을 입력해주세요(둘 다 입력시 '중간기말'을 입력해주세요) : ";
+	cin >> examName;
 
 	for (int i = 0; i < count; i++) {
 		int tmp = 0;
 		int studentID;
-		float score;
-		string examName;
+		string score;
 
 		cout << "학생의 학번을 입력하세요 : ";
 		cin >> studentID;
 
-		cout << "중간고사면 '중간' 기말고사면 '기말'을 입력해주세요 : ";
-		cin >> examName;
-
-		cout << "학생의 점수를 입력하세요 : ";
+		cout << "학생의 점수를 입력하세요('중간기말'이라면 ','를 이용해서 구분해주세요) : ";
 		cin >> score;
 
 		for (auto& it : studentGrade) {

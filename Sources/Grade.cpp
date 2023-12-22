@@ -1,4 +1,28 @@
 #include "Grade.h"
+#include <String>
+#include <sstream>
+#include <Vector>
+#include <regex>
+
+/*
+float 정규 표현식과 일치하는지 검사
+[-+]? : 부호가 있거나 없는 숫자
+[0-9]* : 0개 이상의 숫자
+\\.? : 소수점이 있거나 없는 숫자
+[0-9]+ : 1개 이상의 숫자
+([eE][-+]?[0-9]+)? : 선택적으로 ‘e’ 또는 'E’를 포함하고, 그 뒤에 부호가 있거나 없는 숫자가 오는 지수 표현
+이 중에서 하나라도 맞는게 있다면 true;
+없다면 false를 반환
+*/
+bool Grade::isValidFloat(const std::string& s) {
+	std::regex e("^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$");
+	if (std::regex_match(s, e)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 // 성적표의 각 정보를 set함수를 통해 설정.
 void Grade::setStudenID(int studentID) {
@@ -24,14 +48,11 @@ bool Grade::checkScore(float score) {
 // 중간고사 점수를 저장할 함수
 bool Grade::setMidtermScore(float score) {
 	try {
-		if (checkScore(score)) {
-			midtermScore = score;
-		}
-		else {
+		while (!checkScore(score)) {
 			std::cout << "점수를 다시 입력해주세요 : ";
 			std::cin >> score;
-			midtermScore = score;
 		}
+		midtermScore = score;
 		return true;
 	}
 	catch (std::string input) {
@@ -43,14 +64,11 @@ bool Grade::setMidtermScore(float score) {
 // 기말고사 점수를 저장할 함수
 bool Grade::setLasttermScore(float score) {
 	try {
-		if (checkScore(score)) {
-			lasttermScore = score;
-		}
-		else {
+		while (!checkScore(score)) {
 			std::cout << "점수를 다시 입력해주세요 : ";
 			std::cin >> score;
-			lasttermScore = score;
 		}
+		lasttermScore = score;
 		return true;
 	}
 	catch (std::string input) {
@@ -64,6 +82,26 @@ void Grade::calculateExamAverage(Grade* grade) {
 	grade->average = (grade->midtermScore + grade->lasttermScore) / 2;
 }
 
+// "중간기말" 점수를 입력할 때 다른 문자열이 들어갔는지 확인
+float Grade::isUsedOtherText(std::string score) {
+	// 정규 표현식과 일치하는지 검사 틀리다면 예외 발생.
+	if (!isValidFloat(score)) {
+		throw new std::exception;
+	}
+
+	// string -> float 변환 중 발생할 수 있는 예외 처리 try-catch
+	try {
+		float number = std::stof(score);
+		return number;
+	}
+	catch (const std::invalid_argument& e1) {
+		throw e1;
+	}
+	catch (const std::out_of_range& e2) {
+		throw e2;
+	}
+}
+
 Grade::Grade(int studentID) {
 	setStudenID(studentID);
 	midtermScore = -1;
@@ -72,22 +110,58 @@ Grade::Grade(int studentID) {
 }
 
 // 기본적인 성적 입력의 호출에 따른 함수들을 호출할 함수
-void Grade::inputStudentScore(Grade* grade, float score, std::string examName) {
+void Grade::inputStudentScore(Grade* grade, std::string scores, std::string examName) {
 	if (examName == "중간") {
-		if (grade->setMidtermScore(score)) {
-			std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->midtermScore << "' 입니다." << std::endl;
-			std::cout << "성적 입력이 완료됐습니다." << std::endl;
+		try {
+			if (grade->setMidtermScore(isUsedOtherText(scores))) {
+				std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->midtermScore << "' 입니다." << std::endl;
+				std::cout << "성적 입력이 완료됐습니다." << std::endl;
+			}
 		}
-		else {
+		catch (...) {
+			std::cout << "잘못된 문자를 넣었습니다." << std::endl;
 			std::cout << "성적 입력에 실패하였습니다." << std::endl;
 		}
 	}
 	if (examName == "기말") {
-		if (grade->setLasttermScore(score)) {
-			std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->lasttermScore << "' 입니다." << std::endl;
-			std::cout << "성적 입력이 완료됐습니다." << std::endl;
+		try {
+			if (grade->setLasttermScore(isUsedOtherText(scores))) {
+				std::cout << grade->studentID << "의 학생의 " << examName << "성적은 '" << grade->lasttermScore << "' 입니다." << std::endl;
+				std::cout << "성적 입력이 완료됐습니다." << std::endl;
+			}
 		}
-		else {
+		catch (...) {
+			std::cout << "잘못된 문자를 넣었습니다." << std::endl;
+			std::cout << "성적 입력에 실패하였습니다." << std::endl;
+		}
+	}
+	if (examName == "중간기말") {
+		std::istringstream ss(scores);
+		std::string token;
+		std::vector<float> score;
+
+		while (std::getline(ss, token, ',')) {
+			try {
+				score.push_back(isUsedOtherText(token));
+			}
+			catch (...) {
+				std::cout << "잘못된 문자를 넣었습니다." << std::endl;
+				std::cout << "성적 입력에 실패하였습니다." << std::endl;
+			}
+		}
+
+		if (score.size() == 2) {
+			if (grade->setMidtermScore(score[0])) {
+				std::cout << grade->studentID << "의 학생의 중간 성적은 '" << grade->midtermScore << "' 입니다." << std::endl;
+				std::cout << "성적 입력이 완료됐습니다." << std::endl;
+			}
+			if (grade->setLasttermScore(score[1])) {
+				std::cout << grade->studentID << "의 학생의 기말 성적은 '" << grade->lasttermScore << "' 입니다." << std::endl;
+				std::cout << "성적 입력이 완료됐습니다." << std::endl;
+			}
+		}
+		else if (score.size() > 2) {
+			std::cout << "점수 입력이 많습니다." << std::endl;
 			std::cout << "성적 입력에 실패하였습니다." << std::endl;
 		}
 	}
