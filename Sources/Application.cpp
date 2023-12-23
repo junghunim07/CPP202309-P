@@ -82,20 +82,23 @@ int printMenu() {
 }
 
 Student inputStudentInformation() {
+	Student student;
 	string studentName = "";
 	string phoneNumber = "";
 	int studentID = 0;
 
-	cout << "학생의 이름을 입력해주세요 : ";
-	cin >> studentName;
+	while (student.getStudentName() == "") {
+		cout << "학생의 이름을 입력해주세요 : ";
+		cin >> studentName;
 
-	cout << "학생의 학번을 입력해주세요 : ";
-	cin >> studentID;
+		cout << "학생의 학번을 입력해주세요 : ";
+		cin >> studentID;
 
-	cout << "학생의 번호를 입력해주세요('-'로 구분해주세요) : ";
-	cin >> phoneNumber;
+		cout << "학생의 번호를 입력해주세요('-'로 구분해주세요) : ";
+		cin >> phoneNumber;
 
-	Student student(studentName, studentID, phoneNumber);
+		student = Student(studentName, studentID, phoneNumber);
+	}
 
 	return student;
 }
