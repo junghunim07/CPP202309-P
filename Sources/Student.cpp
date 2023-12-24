@@ -1,6 +1,7 @@
 #include "Student.h"
 
 // 학생의 학번이 올바른 학번인지 확인할 bool 함수
+// 6자리가 아니라면 return false
 bool Student::checkStudentID(int studentID) {
 	std::string strID = std::to_string(studentID);
 
@@ -52,7 +53,7 @@ Student::Student() {
 }
 
 // 입력한 값을 각 학생 객체 인스턴스 변수에 저장
-Student::Student(std::string studentName, int studentID, std:: string phoneNumber) {
+Student::Student(std::string studentName, int studentID, std::string phoneNumber) {
 	if (checkStudentInformationValidation(studentID, phoneNumber)) {
 		this->studentName = studentName;
 		this->studentID = studentID;

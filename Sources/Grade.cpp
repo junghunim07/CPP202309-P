@@ -5,14 +5,14 @@
 #include <regex>
 
 /*
-float 정규 표현식과 일치하는지 검사
-[-+]? : 부호가 있거나 없는 숫자
-[0-9]* : 0개 이상의 숫자
-\\.? : 소수점이 있거나 없는 숫자
-[0-9]+ : 1개 이상의 숫자
-([eE][-+]?[0-9]+)? : 선택적으로 ‘e’ 또는 'E’를 포함하고, 그 뒤에 부호가 있거나 없는 숫자가 오는 지수 표현
-이 중에서 하나라도 맞는게 있다면 true;
-없다면 false를 반환
+* float 정규 표현식과 일치하는지 검사
+* [-+]? : 부호가 있거나 없는 숫자
+* [0-9]* : 0개 이상의 숫자
+* \\.? : 소수점이 있거나 없는 숫자
+* [0-9]+ : 1개 이상의 숫자
+* ([eE][-+]?[0-9]+)? : 선택적으로 ‘e’ 또는 'E’를 포함하고, 그 뒤에 부호가 있거나 없는 숫자가 오는 지수 표현
+** 이 중에서 하나라도 맞는게 있다면 true;
+** 없다면 false를 반환
 */
 bool Grade::isValidFloat(const std::string& s) {
 	std::regex e("^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?$");
@@ -47,7 +47,9 @@ bool Grade::checkScore(float score) {
 
 // 중간고사 점수를 저장할 함수
 bool Grade::setMidtermScore(float score) {
+	// y, n 외 다른 입력값을 받을 경우 예외 처리
 	try {
+		// y값이 입력될 때까지 while문
 		while (!checkScore(score)) {
 			std::cout << "점수를 다시 입력해주세요 : ";
 			std::cin >> score;
@@ -63,7 +65,9 @@ bool Grade::setMidtermScore(float score) {
 
 // 기말고사 점수를 저장할 함수
 bool Grade::setLasttermScore(float score) {
+	// y, n 외 다른 입력값을 받을 경우 예외 처리
 	try {
+		// y값이 입력될 때까지 while문
 		while (!checkScore(score)) {
 			std::cout << "점수를 다시 입력해주세요 : ";
 			std::cin >> score;

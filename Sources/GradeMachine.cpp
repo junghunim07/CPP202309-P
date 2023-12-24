@@ -69,12 +69,19 @@ void GradeMachine::searchStudentGrade(std::vector<Grade>& studentGradeCard, int 
 		for (auto it : studentGradeCard) {
 			if (it.getStudentID() == studentID) {
 				exist = true;
+				// 중간, 기말이 모두 입력되어 있다면 -> 평균 = (중간 + 기말) / 2
 				if (it.getLasttermScore() >= 0 && it.getMidtermScore() >= 0) {
 					std::cout << studentID << "학생의 점수 평균은 = " << it.getAverage() << "입니다." << std::endl;
 				}
+				// 기말 고사 입력이 안되어 있다면 -> 평균 = 중간 점수
 				else if (it.getLasttermScore() < 0 && it.getMidtermScore() >= 0) {
-					std::cout << studentID << "학생의 중간고사 점수은 = " << it.getMidtermScore() << "입니다." << std::endl;
+					std::cout << studentID << "학생의 중간고사 점수는 = " << it.getMidtermScore() << "입니다." << std::endl;
 				}
+				// 중간 고사 입력이 안되어 있다면 -> 평균 = 기말 점수
+				else if (it.getMidtermScore() < 0 && it.getLasttermScore() >= 0) {
+					std::cout << studentID << "학생의 기말고사 점수는 = " << it.getLasttermScore() << "입니다." << std::endl;
+				}
+				// 모두 입력이 안되어 있다면
 				else {
 					std::cout << studentID << "학생의 성적은 아직 입력되어 있지 않습니다." << std::endl;
 				}

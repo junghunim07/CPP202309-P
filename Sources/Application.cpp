@@ -87,6 +87,7 @@ Student inputStudentInformation() {
 	string phoneNumber = "";
 	int studentID = 0;
 
+	// 올바른 정보가 입력될 때까지
 	while (student.getStudentName() == "") {
 		cout << "학생의 이름을 입력해주세요 : ";
 		cin >> studentName;
@@ -103,6 +104,11 @@ Student inputStudentInformation() {
 	return student;
 }
 
+/* 학생 정보 조회 메뉴
+* 학생의 이름 :
+* 학생의 번호 :
+* 학생의 전화번호 :
+*/
 void searchStudentInformation() {
 	for (int i = 0; i < studentCount; i++) {
 		cout << "학생의 이름 : " << students[i].getStudentName() << endl
@@ -116,6 +122,7 @@ Grade makeStudentGradeCard(int studentID) {
 	return grade;
 }
 
+// 성적 입력 메뉴
 void inputStudentScore() {
 	int count;
 	string examName;
@@ -154,6 +161,7 @@ void inputStudentScore() {
 	gradeMachine.searchLimitALineScore(gradeMachine, studentGrade);
 }
 
+// 학생 성적 조회
 void searchStudentGrade() {
 	int studentID;
 	string gradeFormat;
@@ -170,6 +178,7 @@ void searchStudentGrade() {
 	gradeMachine.searchStudentGrade(studentGrade, studentID, gradeFormat);
 }
 
+// 목표 성적 메뉴
 void searchWantGoalScore() {
 	int studentID;
 	string goalGrade;
